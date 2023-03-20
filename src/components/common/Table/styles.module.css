@@ -1,0 +1,15 @@
+.table {
+  @apply w-full table-fixed text-center;
+}
+
+.table_body > tr {
+  @apply bg-grey-700;
+}
+
+.table_body > tr:nth-child(odd) {
+  @apply bg-brand-shade;
+}
+
+.table_body > tr > td {
+  @apply py-2;
+}
