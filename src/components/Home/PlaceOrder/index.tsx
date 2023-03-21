@@ -86,7 +86,7 @@ const PlaceOrderBlock = () => {
           type={'num'}
           props={{ required: true }}
         />
-        <Button css="w-full" label="Submit" />
+        <Button css="w-full">Submit</Button>
       </form>
     </Block>
   );

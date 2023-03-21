@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 
 import Button from '@/components/common/Button';
@@ -21,7 +20,7 @@ const Footer = () => {
               <Heading label={<HeaderTitle />} variant="large" />
             </div>
           </a>
-          <Button label="Contact Us For More Details" />
+          <Button>Contact Us For More Details</Button>
           <div>
             <Heading label="Social Media Links" variant="medium" />
             <div className="flex justify-between items-center mt-2 px-2">

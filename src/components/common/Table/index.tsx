@@ -44,10 +44,10 @@ const Table = ({ label, tableHeader, tableBody }: TableProps) => {
                     <td>{item.price}</td>
                     <td>{item.vol}</td>
                     <td>
-                      <Button label="Claim" />
+                      <Button>Claim</Button>
                     </td>
                     <td>
-                      <Button label="Cancel" />
+                      <Button>Cancel</Button>
                     </td>
                   </tr>
                 );

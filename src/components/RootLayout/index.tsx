@@ -1,15 +1,15 @@
-import { chdir } from 'process';
-import React, { ReactNode } from 'react';
+import dynamic from 'next/dynamic';
+import { ReactNode } from 'react';
+
 import Footer from './Footer';
-import Header from './Header';
+
+const Header = dynamic(() => import('./Header'), { ssr: false });
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Header />
-      <section className="max-w-screen-xl m-auto mt-12 mb-24">
-        {children}
-      </section>
+      <div className="max-w-screen-xl m-auto mt-12 mb-24">{children}</div>
       <Footer />
     </div>
   );
