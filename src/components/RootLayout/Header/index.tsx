@@ -21,28 +21,27 @@ import { getShorterAddress } from '@/utils/helpers';
 import HeaderTitle from './HeaderTitle';
 
 const Header = () => {
-  const { address, connector, isConnected } = useAccount();
-  const { connect, connectors, isLoading, pendingConnector, error } =
-    useConnect({
-      chainId: CHAIN_ID,
-      onError(e: any) {
-        if (e.code === -32002) {
-          notify(
-            'Your wallet already has a pending request waiting for your signature'
-          );
-        } else if (e.name === 'ConnectorNotFoundError') {
-          window.open('https://metamask.io/download/', '_blank');
-          notifyError('Could not find injected web3 wallet in your browser');
-        } else if (e.code === 4001) {
-          notifyError(e.message);
-        } else {
-          notifyError(e.message);
-        }
-      },
-      onSuccess() {
-        notifySuccess('Wallet Connected');
-      },
-    });
+  const { address, isConnected } = useAccount();
+  const { connect, connectors, isLoading } = useConnect({
+    chainId: CHAIN_ID,
+    onError(e: any) {
+      if (e.code === -32002) {
+        notify(
+          'Your wallet already has a pending request waiting for your signature'
+        );
+      } else if (e.name === 'ConnectorNotFoundError') {
+        window.open('https://metamask.io/download/', '_blank');
+        notifyError('Could not find injected web3 wallet in your browser');
+      } else if (e.code === 4001) {
+        notifyError(e.message);
+      } else {
+        notifyError(e.message);
+      }
+    },
+    onSuccess() {
+      notifySuccess('Wallet Connected');
+    },
+  });
   const { disconnect } = useDisconnect();
 
   const disconnectWallet = () => {
@@ -75,6 +74,7 @@ const Header = () => {
                   className={
                     'rounded-lg bg-brand-primary px-10 py-3 outline-none opacity-90 hover:opacity-100 hover:shadow-sm hover:shadow-brand-primary transition-all ease-in-out duration-200 text-grey-100 text-base'
                   }
+                  disabled={isLoading}
                 >
                   {getShorterAddress(address)}
                 </Menu.Button>
@@ -107,6 +107,7 @@ const Header = () => {
                     connector: connectors[0],
                   })
                 }
+                disabled={isLoading}
               >
                 Connect Wallet
               </Button>
