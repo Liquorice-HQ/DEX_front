@@ -1,16 +1,21 @@
 import React, { Fragment, useState } from 'react';
 import { ethers } from 'ethers';
 import { Tab } from '@headlessui/react';
+import { useAccount, useConnect } from 'wagmi';
 
 import Block from '@/components/common/Block';
 import Button from '@/components/common/Button';
 import Heading from '@/components/common/Heading';
 import Input from '@/components/common/Input';
-
 import TxModal from '@/components/common/Modal/TxSubmitModal';
 
-import { contractABI, contractAddress } from '@/utils/constants';
-import { notifyError, notifyInformation, notifySuccess } from '@/utils/toasts';
+import { CHAIN_ID, contractABI, contractAddress } from '@/utils/constants';
+import {
+  notify,
+  notifyError,
+  notifyInformation,
+  notifySuccess,
+} from '@/utils/toasts';
 
 const makerTakerList = ['Maker', 'Taker'];
 
@@ -22,6 +27,28 @@ const PlaceOrderBlock = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [variant, setVariant] = useState<'submit' | 'success'>('submit');
   const [isLoading, setIsLoading] = useState(false);
+  const { isConnected } = useAccount();
+
+  const { connect, connectors } = useConnect({
+    chainId: CHAIN_ID,
+    onError(e: any) {
+      if (e.code === -32002) {
+        notify(
+          'Your wallet already has a pending request waiting for your signature'
+        );
+      } else if (e.name === 'ConnectorNotFoundError') {
+        window.open('https://metamask.io/download/', '_blank');
+        notifyError('Could not find injected web3 wallet in your browser');
+      } else if (e.code === 4001) {
+        notifyError(e.message);
+      } else {
+        notifyError(e.message);
+      }
+    },
+    onSuccess() {
+      notifySuccess('Wallet Connected');
+    },
+  });
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -141,16 +168,29 @@ const PlaceOrderBlock = () => {
             max={100}
             min={0}
           />
-          <Button
-            isLoading={isLoading}
-            onClick={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-            css="w-full"
-          >
-            Submit
-          </Button>
+          {isConnected ? (
+            <Button
+              isLoading={isLoading}
+              onClick={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+              css="w-full"
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              isLoading={isLoading}
+              onClick={(e) => {
+                e.preventDefault();
+                connect({ connector: connectors[0] });
+              }}
+              css="w-full"
+            >
+              Connect Wallet
+            </Button>
+          )}
         </form>
       </Block>
 
