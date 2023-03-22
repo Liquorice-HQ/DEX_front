@@ -11,7 +11,7 @@ type Price = {
   change: number | undefined;
 };
 
-const timer = 10000;
+const timer = 5000;
 
 export const useGetETHPrice = () => {
   const [price, setPrice] = useState<Price>({

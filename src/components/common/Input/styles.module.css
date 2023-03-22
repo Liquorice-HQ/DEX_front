@@ -1,0 +1,13 @@
+.input {
+  @apply bg-grey-800 block outline outline-grey-700 rounded w-full p-3 text-base focus:outline-brand-primary;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type='number'] {
+  -moz-appearance: textfield;
+}
