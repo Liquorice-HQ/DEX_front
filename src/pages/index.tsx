@@ -1,7 +1,12 @@
+import dynamic from 'next/dynamic';
+
 import Auction from '@/components/Home/AuctionTable';
 import PendingTxs from '@/components/Home/PendingTxs';
-import PlaceOrderBlock from '@/components/Home/PlaceOrder';
 import VolMarkupTable from '@/components/Home/VolMarkupTable';
+
+const PlaceOrderBlock = dynamic(() => import('@/components/Home/PlaceOrder'), {
+  ssr: false,
+});
 
 export default function Home() {
   return (

@@ -1,10 +1,10 @@
 export const isDev = process.env.NEXT_PUBLIC_IS_DEV;
 export const CHAIN_ID = isDev ? 80001 : 137;
-export const ethPriceAPI = process.env.NEXT_PUBLIC_ETH_PRICE_API;
-export const ethCurrentPriceKey = 'eth_usdc_c_price';
-export const ethChangeKey = 'eth_usdc_change';
+export const maticPriceAPI = process.env.NEXT_PUBLIC_ETH_PRICE_API;
+export const maticCurrentPriceKey = 'matic_usdt_c_price';
+export const maticChangeKey = 'matic_usdt_change';
 export const contractAddress = isDev
-  ? '0x3D1aB018cC408d0AA4A02b723236Ad7B0c460457'
+  ? '0x51E3ED0d93AfE3de891D73551BFc279BC315C9E8'
   : '';
 export const contractABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
@@ -86,9 +86,41 @@ export const contractABI = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'dai',
-    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    inputs: [{ internalType: 'address', name: '_sender', type: 'address' }],
+    name: 'displayAuctions',
+    outputs: [
+      {
+        components: [
+          { internalType: 'uint256', name: 'auctionid', type: 'uint256' },
+          { internalType: 'address', name: 'sender', type: 'address' },
+          { internalType: 'int256', name: 'volume', type: 'int256' },
+          { internalType: 'int256', name: 'markup', type: 'int256' },
+          { internalType: 'int256', name: 'price', type: 'int256' },
+        ],
+        internalType: 'struct liquorice.auctionView[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_sender', type: 'address' }],
+    name: 'displayOrders',
+    outputs: [
+      {
+        components: [
+          { internalType: 'uint256', name: 'id', type: 'uint256' },
+          { internalType: 'address', name: 'sender', type: 'address' },
+          { internalType: 'int256', name: 'volume', type: 'int256' },
+          { internalType: 'int256', name: 'markup', type: 'int256' },
+        ],
+        internalType: 'struct liquorice.ordersView[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -157,6 +189,23 @@ export const contractABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'priceLadder',
+    outputs: [
+      {
+        components: [
+          { internalType: 'int256', name: 'markup', type: 'int256' },
+          { internalType: 'int256', name: 'volume', type: 'int256' },
+        ],
+        internalType: 'struct liquorice.orderbookView[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'usdcBalances',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
@@ -204,6 +253,13 @@ export const contractABI = [
         type: 'tuple',
       },
     ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'int256', name: '_key', type: 'int256' }],
+    name: 'volumeSum',
+    outputs: [{ internalType: 'int256', name: 'levelSum', type: 'int256' }],
     stateMutability: 'view',
     type: 'function',
   },

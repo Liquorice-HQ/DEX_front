@@ -2,7 +2,7 @@ import Block from '@/components/common/Block';
 import Heading from '@/components/common/Heading';
 import SubHeading from '@/components/common/Subheading';
 
-import EthUSDCPriceBlock from './EthUSDCPriceBlock';
+import MaticUSDTPriceBlock from './MaticUSDTPriceBlock';
 
 const mockData = [
   { vol: '24.05', price: '1.256' },
@@ -15,7 +15,7 @@ const VolMarkupTable = () => {
   return (
     <Block css="flex-1">
       <div>
-        <EthUSDCPriceBlock />
+        <MaticUSDTPriceBlock />
       </div>
       <div className="flex justify-between h-full">
         <div className="flex-1 border-r border-brand-primary px-6 py-4">

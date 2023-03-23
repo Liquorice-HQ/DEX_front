@@ -3,15 +3,15 @@ import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Heading from '@/components/common/Heading';
 import SubHeading from '@/components/common/Subheading';
 
-import { useGetETHPrice } from '@/hooks/useGetETHPrice';
+import { useGetMaticPrice } from '@/hooks/useGetMaticPrice';
 
-const EthUSDCPriceBlock = () => {
-  const { currentPrice, change } = useGetETHPrice();
+const MaticUSDTPriceBlock = () => {
+  const { currentPrice, change } = useGetMaticPrice();
 
   return (
     <div className="pt-2 px-6 pb-2 border-b border-brand-primary">
       <SubHeading
-        label={<span className="text-brand-primary">ETH/USDT</span>}
+        label={<span className="text-brand-primary">MATIC/USDT</span>}
         variant="medium"
       />
       {currentPrice !== undefined && change !== undefined ? (
@@ -47,4 +47,4 @@ const EthUSDCPriceBlock = () => {
   );
 };
 
-export default EthUSDCPriceBlock;
+export default MaticUSDTPriceBlock;

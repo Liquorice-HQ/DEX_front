@@ -1,4 +1,7 @@
 import React, { ReactNode } from 'react';
+
+import { getShorterAddress } from '@/utils/helpers';
+
 import Block from '../Block';
 import Button from '../Button';
 import Heading from '../Heading';
@@ -13,9 +16,9 @@ type TableProps = {
 
 type AuctionItem = {
   address: string;
-  price: number | string;
-  vol: number | string;
-  slide: number | string;
+  markup: number | string;
+  volume: number | string;
+  id: number | string;
 };
 
 const Table = ({ label, tableHeader, tableBody }: TableProps) => {
@@ -40,9 +43,9 @@ const Table = ({ label, tableHeader, tableBody }: TableProps) => {
               {tableBody.map((item: AuctionItem, index) => {
                 return (
                   <tr key={index}>
-                    <td>{item.address}</td>
-                    <td>{item.price}</td>
-                    <td>{item.vol}</td>
+                    <td>{getShorterAddress(item.address)}</td>
+                    <td>{item.volume}</td>
+                    <td>{item.markup}</td>
                     <td>
                       <Button>Claim</Button>
                     </td>

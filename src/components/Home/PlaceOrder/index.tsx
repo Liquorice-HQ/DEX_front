@@ -107,7 +107,6 @@ const PlaceOrderBlock = () => {
       notifyError('Something went wrong');
     } finally {
       setIsLoading(false);
-      setHash('');
       setVolume('');
       setMarkup('');
     }
