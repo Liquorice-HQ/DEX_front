@@ -51,8 +51,8 @@ const Button = ({
   if (disabled) {
     return (
       <button
-        onClick={onClick}
-        className={`rounded-lg bg-grey-800 px-10 py-3 outline-none text-grey-100 text-base ${css}`}
+        onClick={() => {}}
+        className={`cursor-not-allowed opacity-100 rounded-lg bg-brand-shade px-10 py-3 outline-none text-grey-100 text-base ${css}`}
         {...rest}
       >
         {children}

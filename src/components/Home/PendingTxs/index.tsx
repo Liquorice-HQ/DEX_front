@@ -3,17 +3,24 @@ import { ethers } from 'ethers';
 import { useState, useCallback, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { contractAddress, contractABI } from '@/utils/constants';
-import { notifyError } from '@/utils/toasts';
+import { notifyError, notifyInformation, notifySuccess } from '@/utils/toasts';
 
 import { TAuction } from '../AuctionTable';
+import TxModal from '../../common/Modal/TxSubmitModal';
 
 const PendingTxs = () => {
   const { address, isConnected } = useAccount();
   const [orders, setOrders] = useState<TAuction[]>([]);
+  const [hash, setHash] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
+  const [variant, setVariant] = useState<'submit' | 'success'>('submit');
 
   const fetchAuctions = useCallback(async () => {
     try {
-      if (!isConnected) return;
+      if (!isConnected) {
+        setOrders([]);
+        return;
+      }
       //@ts-ignore
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const contract = new ethers.Contract(
@@ -23,7 +30,6 @@ const PendingTxs = () => {
       );
 
       const data = await contract.displayOrders(address);
-
       if (data === undefined || data.length === 0) {
         throw new Error("Couldn't fetch auctions");
       }
@@ -57,6 +63,8 @@ const PendingTxs = () => {
       provider
     );
     contract.on('AuctionBookChanged', () => {
+      console.log('called');
+
       fetchAuctions();
     });
 
@@ -64,14 +72,52 @@ const PendingTxs = () => {
       contract.removeAllListeners('AuctionBookChanged');
     };
   }, [fetchAuctions]);
+
+  const cancelOrder = async (id: string, markup: string) => {
+    try {
+      //@ts-ignore
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      const tx = await contract.ordercancel(markup, id);
+      const hash = tx?.hash;
+
+      setHash(hash);
+      setOpen(true);
+      setVariant('submit');
+      notifyInformation('Transaction Submitted');
+
+      await tx?.wait();
+      setVariant('success');
+      notifySuccess('Transaction Successfull');
+    } catch (error) {
+      console.log(error);
+      notifyError('Something went wrong');
+    }
+  };
   return (
-    <div>
-      <Table
-        label="Pending Transactions"
-        tableBody={orders}
-        tableHeader={['Address', 'Volume', 'Markup']}
+    <>
+      <div>
+        <Table
+          label="Pending Transactions"
+          tableBody={orders}
+          tableHeader={['Address', 'Volume', 'Markup']}
+          claim={undefined}
+          cancel={cancelOrder}
+        />
+      </div>
+      <TxModal
+        variant={variant}
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        hash={hash}
       />
-    </div>
+    </>
   );
 };
 
