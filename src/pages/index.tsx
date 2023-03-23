@@ -11,7 +11,7 @@ const PlaceOrderBlock = dynamic(() => import('@/components/Home/PlaceOrder'), {
 export default function Home() {
   return (
     <div className="space-y-16">
-      <div className="flex max-h-96 items-stretch justify-between gap-4">
+      <div className="flex max-h-[352px] items-stretch justify-between gap-4 overflow-y-scroll">
         <VolMarkupTable />
         <PlaceOrderBlock />
       </div>

@@ -51,10 +51,14 @@ const VolMarkupTable = () => {
       });
 
       setPriceLadderPositive(
-        priceLadderData.filter((item: TPriceLadder) => +item.markup > 0)
+        priceLadderData
+          .filter((item: TPriceLadder) => +item.markup > 0)
+          .sort((a: TPriceLadder, b: TPriceLadder) => +a.markup - +b.markup)
       );
       setPriceLadderNegative(
-        priceLadderData.filter((item: TPriceLadder) => +item.markup < 0)
+        priceLadderData
+          .filter((item: TPriceLadder) => +item.markup < 0)
+          .sort((a: TPriceLadder, b: TPriceLadder) => +b.markup - +a.markup)
       );
     } catch (error) {
       console.log(error);
@@ -86,13 +90,13 @@ const VolMarkupTable = () => {
       <div>
         <MaticUSDTPriceBlock />
       </div>
-      <div className="flex justify-between h-full">
+      <div className="flex justify-between max-h-[280px]">
         <div className="flex-1 border-r border-brand-primary px-6 py-4">
           <div className="flex justify-between">
             <Heading label="Volume" variant="medium" />
             <Heading label="Markup (in b.p)" variant="medium" />
           </div>
-          <div className="space-y-2 mt-4 max-h-full overflow-y-scroll">
+          <div className="space-y-2 mt-4 max-h-full overflow-y-scroll pb-1">
             {priceLadderPositive.map((item, index) => {
               return (
                 <div key={index} className="flex justify-between">
@@ -108,7 +112,7 @@ const VolMarkupTable = () => {
             <Heading label="Volume" variant="medium" />
             <Heading label="Markup (in b.p)" variant="medium" />
           </div>
-          <div className="space-y-2 mt-4 max-h-full overflow-y-scroll">
+          <div className="space-y-2 mt-4 max-h-full overflow-y-scroll pb-1">
             {priceLadderNegative.map((item, index) => {
               return (
                 <div key={index} className="flex justify-between">
