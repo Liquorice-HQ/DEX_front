@@ -1,13 +1,17 @@
-import Block from '@/components/common/Block';
-import Heading from '@/components/common/Heading';
-import SubHeading from '@/components/common/Subheading';
 import { ethers } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
-import { contractAddress, contractABI } from '../../../utils/constants';
-import { notifyError } from '../../../utils/toasts';
+
+import Block from '@/components/common/Block';
+import Heading from '@/components/common/Heading';
+import SubHeading from '@/components/common/Subheading';
+
+import { contractAddress, contractABI } from '@/utils/constants';
+import { notifyError } from '@/utils/toasts';
 
 import MaticUSDTPriceBlock from './MaticUSDTPriceBlock';
+
+import styles from './styles.module.css';
 
 type TPriceLadder = {
   volume: string | number;
@@ -96,8 +100,8 @@ const VolMarkupTable = () => {
             <Heading label="Volume" variant="medium" />
             <Heading label="Markup (in b.p)" variant="medium" />
           </div>
-          <div className="space-y-2 mt-4 max-h-full overflow-y-scroll pb-1">
-            {priceLadderPositive.map((item, index) => {
+          <div className={styles.ladder}>
+            {priceLadderNegative.map((item, index) => {
               return (
                 <div key={index} className="flex justify-between">
                   <SubHeading label={item.volume} variant="medium" />
@@ -112,8 +116,8 @@ const VolMarkupTable = () => {
             <Heading label="Volume" variant="medium" />
             <Heading label="Markup (in b.p)" variant="medium" />
           </div>
-          <div className="space-y-2 mt-4 max-h-full overflow-y-scroll pb-1">
-            {priceLadderNegative.map((item, index) => {
+          <div className={styles.ladder}>
+            {priceLadderPositive.map((item, index) => {
               return (
                 <div key={index} className="flex justify-between">
                   <SubHeading label={item.volume} variant="medium" />

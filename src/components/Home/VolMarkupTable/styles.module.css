@@ -1,0 +1,7 @@
+.ladder {
+  @apply space-y-2 mt-4 max-h-full overflow-y-scroll pb-1;
+}
+
+.ladder::-webkit-scrollbar {
+  display: none;
+}

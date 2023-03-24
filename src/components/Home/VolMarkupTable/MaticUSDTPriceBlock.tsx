@@ -11,7 +11,7 @@ const MaticUSDTPriceBlock = () => {
   return (
     <div className="pt-2 px-6 pb-2 border-b border-brand-primary">
       <SubHeading
-        label={<span className="text-brand-primary">MATIC/USDT</span>}
+        label={<span className="text-brand-primary">MATIC/USDC</span>}
         variant="medium"
       />
       {currentPrice !== undefined && change !== undefined ? (
