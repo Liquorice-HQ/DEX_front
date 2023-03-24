@@ -4,7 +4,7 @@ export const maticPriceAPI = process.env.NEXT_PUBLIC_ETH_PRICE_API;
 export const maticCurrentPriceKey = 'matic_usdt_c_price';
 export const maticChangeKey = 'matic_usdt_change';
 export const contractAddress = isDev
-  ? '0x51E3ED0d93AfE3de891D73551BFc279BC315C9E8'
+  ? '0x797e99A6f554bB0D48e1d10D0cA2B5f8DB50DD7b'
   : '';
 export const contractABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
@@ -213,6 +213,15 @@ export const contractABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'usdcToken',
+    outputs: [
+      { internalType: 'contract UsdcToken', name: '', type: 'address' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'uint256', name: '_key', type: 'uint256' }],
     name: 'viewAuction',
     outputs: [
@@ -261,6 +270,13 @@ export const contractABI = [
     name: 'volumeSum',
     outputs: [{ internalType: 'int256', name: 'levelSum', type: 'int256' }],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '_auctionID', type: 'uint256' }],
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
 ];
