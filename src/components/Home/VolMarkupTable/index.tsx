@@ -90,7 +90,7 @@ const VolMarkupTable = () => {
       <div>
         <MaticUSDTPriceBlock />
       </div>
-      <div className="flex justify-between max-h-[280px]">
+      <div className="flex justify-between h-[280px]">
         <div className="flex-1 border-r border-brand-primary px-6 py-4">
           <div className="flex justify-between">
             <Heading label="Volume" variant="medium" />
