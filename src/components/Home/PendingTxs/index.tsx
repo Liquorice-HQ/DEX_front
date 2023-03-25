@@ -68,8 +68,13 @@ const PendingTxs = () => {
       fetchAuctions();
     });
 
+    contract.on('OrderBookChanged', () => {
+      fetchAuctions();
+    });
+
     return () => {
       contract.removeAllListeners('AuctionBookChanged');
+      contract.removeAllListeners('OrderBookChanged');
     };
   }, [fetchAuctions]);
 

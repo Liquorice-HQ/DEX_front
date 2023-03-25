@@ -15,7 +15,7 @@ export default function Home() {
         <VolMarkupTable />
         <PlaceOrderBlock />
       </div>
-      <Auction />
+      {/* <Auction /> */}
       <PendingTxs />
     </div>
   );
