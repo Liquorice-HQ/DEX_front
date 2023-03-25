@@ -1,12 +1,14 @@
-import Table from '@/components/common/Table';
 import { ethers } from 'ethers';
 import { useState, useCallback, useEffect } from 'react';
 import { useAccount } from 'wagmi';
+
 import { contractAddress, contractABI } from '@/utils/constants';
 import { notifyError, notifyInformation, notifySuccess } from '@/utils/toasts';
 
+import TxModal from '@/components/common/Modal/TxSubmitModal';
+import Table from '@/components/common/Table';
+
 import { TAuction } from '../AuctionTable';
-import TxModal from '../../common/Modal/TxSubmitModal';
 
 const PendingTxs = () => {
   const { address, isConnected } = useAccount();
@@ -63,8 +65,6 @@ const PendingTxs = () => {
       provider
     );
     contract.on('AuctionBookChanged', () => {
-      console.log('called');
-
       fetchAuctions();
     });
 

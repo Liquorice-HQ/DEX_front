@@ -92,7 +92,12 @@ const PlaceOrderBlock = () => {
         signer
       );
 
-      const tx = await contract.orderplace(_volume, bool, _markup);
+      const tx =
+        type === 'Maker'
+          ? await contract.orderplace(_volume, bool, _markup, {
+              value: ethers.utils.parseEther(volume.toString()),
+            })
+          : await contract.orderplace(_volume, bool, _markup);
       const hash = tx?.hash;
       setHash(hash);
       setVariant('submit');

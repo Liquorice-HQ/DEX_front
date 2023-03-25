@@ -41,10 +41,13 @@ const Auction = () => {
         throw new Error("Couldn't fetch auctions");
       }
       const auctionData = data.map((item: any[]) => {
-        const id = ethers.utils.formatEther(item[0]) ?? '-';
+        const id =
+          (+ethers.utils.formatEther(item[0]) * 1e18).toString() ?? '-';
         const _address = item[1] ?? '-';
-        const volume = ethers.utils.formatEther(item[2]) ?? '-';
-        const markup = ethers.utils.formatEther(item[4]) ?? '-';
+        const volume =
+          (+ethers.utils.formatEther(item[2]) * 1e18).toString() ?? '-';
+        const markup =
+          (+ethers.utils.formatEther(item[4]) * 1e18).toString() ?? '-';
 
         return { address: _address, id, volume, markup };
       });
