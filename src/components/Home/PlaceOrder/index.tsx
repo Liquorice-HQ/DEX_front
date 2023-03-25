@@ -81,7 +81,7 @@ const PlaceOrderBlock = () => {
       }
 
       const bool = type === 'Maker' ? 1 : 0;
-      const _markup = bool ? +markup : -markup;
+      const _markup = +markup;
       const _volume = +volume;
       //@ts-ignore
       const provider = new ethers.providers.Web3Provider(window.ethereum);
